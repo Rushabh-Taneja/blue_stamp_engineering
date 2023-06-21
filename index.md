@@ -9,7 +9,7 @@ Replace this text with a brief description (2-3 sentences) of your project. This
 
 ![Headstone Image](logo.svg)
   
-# Final Milestone
+<!--# Final Milestone
 For your final milestone, explain the outcome of your project. Key details to include are:
 - What you've accomplished since your previous milestone
 - What your biggest challenges and triumphs were at BSE
@@ -60,6 +60,8 @@ void loop() {
 
 }
 ```
+
+-->
 
 # First Milestone
 For your first milestone, describe what your project is and how you plan to build it. You can include:
@@ -174,7 +176,7 @@ Don't forget to place the link of where to buy each component inside the quotati
 |:--:|:--:|:--:|:--:|
 | Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
 |:--:|:--:|:--:|:--:|
-
+<!--
 # Other Resources/Examples
 One of the best parts about Github is that you can view how other people set up their own work. Here are some past BSE portfolios that are awesome examples. You can view how they set up their portfolio, and you can view their index.md files to understand how they implemented different portfolio components.
 - [Example 1](https://trashytuber.github.io/YimingJiaBlueStamp/)
