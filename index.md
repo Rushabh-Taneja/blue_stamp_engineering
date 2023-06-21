@@ -1,4 +1,4 @@
-# Project Name Here
+# Keypad and Fingerprint Lock Box
 Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
@@ -68,6 +68,8 @@ For your first milestone, describe what your project is and how you plan to buil
 - Challenges you're facing and solving in your future milestones
 - What your plan is to complete your project
 
+For my first milestone, I attached a functioning keypad and a servo and set a passcode to activate them. This is the first security system and the locking system that I plan to use, leaving only the finger print sensor and the installation into the box. I used a jumper cables to connect the servo and number pad to the arduino board. I used c++ to create a matrix to match with every key on the keyboard to provide an output representing the same number when the respective key was pressed. This allowed for a user to input a code. The only exceptions to this were "*" and "#" which either cleared 
+
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
 
@@ -82,13 +84,13 @@ Here's where you'll put your code. The syntax below places it into a block of co
 
 const byte ROWS = 4;  //four rows
 const byte COLS = 3;  //three columns
-String password = "123554";
+String password = "1234";
 String code = "";
 String input = "";
 
 Servo myservo;
 
-int pos;
+int pos = 90;
 
 char keys[ROWS][COLS] = {
   { '1', '2', '3' },
@@ -105,8 +107,7 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 void setup() {
   Serial.begin(9600);
   myservo.attach(11);  // attaches the servo on pin 11 to the servo object
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
+  myservo.write(pos);
 }
 
 void loop() {
@@ -123,14 +124,23 @@ void loop() {
       Serial.println("Unlocked");
       input = "";
       code = "";
-
-      for (pos = 0; pos <= 180; pos += 1) {  // goes from 0 degrees to 180 degrees
-        // in steps of 1 degree
-        myservo.write(pos);  // tell servo to go to position in variable 'pos'
-        delay(15);           // waits 15ms for the servo to reach the position
+      if(pos==0){
+        for (pos = 0; pos < 90; pos += 3) {  // goes from 0 degrees to 180 degrees
+          // in steps of 1 degree
+          myservo.write(pos);  // tell servo to go to position in variable 'pos'
+          delay(15);           // waits 15ms for the servo to reach the position
+        }
+      }
+      else if (pos==90){
+        for (pos = 90; pos > 0; pos -= 3) {  // goes from 0 degrees to 180 degrees
+          // in steps of 1 degree
+          myservo.write(pos);  // tell servo to go to position in variable 'pos'
+          delay(15);           // waits 15ms for the servo to reach the position
+        }
       }
 
-    } else {
+      }
+     else {
       Serial.println("Wrong password");
       input = "";
       code = "";
