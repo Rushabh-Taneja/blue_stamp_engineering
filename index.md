@@ -77,15 +77,74 @@ For your first milestone, describe what your project is and how you plan to buil
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
 ```c++
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
-}
-void loop() {
-  // put your main code here, to run repeatedly:
+#include <Keypad.h>
+#include <Servo.h>
 
+const byte ROWS = 4;  //four rows
+const byte COLS = 3;  //three columns
+String password = "123554";
+String code = "";
+String input = "";
+
+Servo myservo;
+
+int pos;
+
+char keys[ROWS][COLS] = {
+  { '1', '2', '3' },
+  { '4', '5', '6' },
+  { '7', '8', '9' },
+  { '*', '0', '#' }
+};
+byte rowPins[ROWS] = { 6, 7, 8, 9 };  //connect to the row pinouts of the keypad
+byte colPins[COLS] = { 3, 4, 5 };     //connect to the column pinouts of the keypad
+
+//Create an object of keypad
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+void setup() {
+  Serial.begin(9600);
+  myservo.attach(11);  // attaches the servo on pin 11 to the servo object
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
 }
+
+void loop() {
+
+  char key = keypad.getKey();  // Read the key
+  if (key == '*') {
+    input = "";
+    code = "";
+    Serial.println("cleared");
+  }
+
+  else if (key == '#') {
+    if (password == input) {
+      Serial.println("Unlocked");
+      input = "";
+      code = "";
+
+      for (pos = 0; pos <= 180; pos += 1) {  // goes from 0 degrees to 180 degrees
+        // in steps of 1 degree
+        myservo.write(pos);  // tell servo to go to position in variable 'pos'
+        delay(15);           // waits 15ms for the servo to reach the position
+      }
+
+    } else {
+      Serial.println("Wrong password");
+      input = "";
+      code = "";
+    }
+  }
+
+  // Print if key pressed
+  else if (key) {
+    code = code + "*";
+    input += key;
+    Serial.println(code);
+  }
+}
+
 ```
 
 # Schematics 
