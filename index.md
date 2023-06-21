@@ -64,13 +64,13 @@ void loop() {
 -->
 
 # First Milestone
-For your first milestone, describe what your project is and how you plan to build it. You can include:
+<!--For your first milestone, describe what your project is and how you plan to build it. You can include:
 - An explanation about the different components of your project and how they will all integrate together
 - Technical progress you've made so far
 - Challenges you're facing and solving in your future milestones
-- What your plan is to complete your project
+- What your plan is to complete your project-->
 
-For my first milestone, I attached a functioning keypad and a servo and set a passcode to activate them. This is the first security system and the locking system that I plan to use, leaving only the finger print sensor and the installation into the box. I used a jumper cables to connect the servo and number pad to the arduino board. I used c++ to create a matrix to match with every key on the keyboard to provide an output representing the same number when the respective key was pressed. This allowed for a user to input a code. The only exceptions to this were "*" and "#" which either cleared 
+For my first milestone, I attached a functioning keypad and a servo and set a passcode to activate them. This is the first security system and the locking system that I plan to use, leaving only the fingerprint sensor and the installation in the box. I used jumper cables to connect the servo and number pad to the Arduino board. I used C++ to create a matrix that matched every key on the keyboard to provide an output representing the same number when the respective key was pressed. This allowed for a user to input values which were later used to make a code to compare with the password. The only exceptions to this were "*" and "#" which cleared the code and compared it with the password respectively. I then added the servo to function as part of a locking system. When the proper code was put in, the servo would turn 90° which would be used to either lock or unlock the box.
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
