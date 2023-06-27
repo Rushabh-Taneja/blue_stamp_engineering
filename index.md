@@ -36,34 +36,432 @@ void loop() {
 
 }
 ```
-
+-->
 # Second Milestone
+<!--
 For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
 - Technical details of what you've accomplished and how they contribute to the final goal
 - What has been surprising about the project so far
 - Previous challenges you faced that you overcame
 - What needs to be completed before your final milestone 
 
-**Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
+-->
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/y3VAmNlER5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+For my second milestone, I have added a fingerprint sensor and battery to my project. This allows the setup to be no longer reliant on my computer as a power source meaning it can be connected to the box. The fingerprint sensor allows the user to scan their fingerprint as another form of verification as well as a way for the user to see if their inputs are right or wrong. The led on the sensor turns red if either the fingerprint or code is incorrect while turning blue if both are correct. The servo works with both, turning if both inputs are correct. A challenge I faced during this milestone was attaching the fingerprint sensor and getting it to work. There were 6 wires attached to the sensor but only 4 were being used, leaving me confused about the purpose of the other 2 until I realized they were useless. Coding it to work was also a struggle as I was not sure what function I was supposed to be used to compare the users fingerprint to the fingerprints of the library until I realized I had to call the entire method and not specific functions. Another issue I faced was running out of space on the Arduino board to plug in the components, but that was easily solved with a breadboard. The next steps will be to add a way to change the passcode, a way to add and remove fingerprints from the library and attach the whole thing to the box. 
+ 
+
+
+
 # Code
-Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
 ```c++
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
-}
-void loop() {
-  // put your main code here, to run repeatedly:
+#include <Keypad.h>
+#include <Servo.h>
+#include <Adafruit_Fingerprint.h>
 
+#if (defined(__AVR__) || defined(ESP8266)) && !defined(__AVR_ATmega2560__)
+
+// For UNO and others without hardware serial, we must use software serial...
+// pin #12 is IN from sensor (GREEN wire)
+// pin #13 is OUT from arduino  (WHITE wire)
+// Set up the serial port to use softwareserial..
+SoftwareSerial mySerial(12, 13);
+
+#else
+// On Leonardo/M0/etc, others with hardware serial, use hardware serial!
+// #0 is green wire, #1 is white
+#define mySerial Serial1
+
+#endif
+
+const byte ROWS = 4;  //four rows
+const byte COLS = 3;  //three columns
+String password = "1234";
+String code = "";
+String input = "";
+
+Servo myservo;
+Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
+
+uint8_t id;
+
+int pos = 0;
+
+char keys[ROWS][COLS] = {
+  { '1', '2', '3' },
+  { '4', '5', '6' },
+  { '7', '8', '9' },
+  { '*', '0', '#' }
+};
+byte rowPins[ROWS] = { 6, 7, 8, 9 };  //connect to the row pinouts of the keypad
+byte colPins[COLS] = { 3, 4, 5 };     //connect to the column pinouts of the keypad
+
+//Create an object of keypad
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+void setup() {
+
+
+  Serial.begin(9600);
+  myservo.attach(11);  // attaches the servo on pin 11 to the servo object
+  myservo.write(pos);
+  //while (!Serial)
+  ;  // For Yun/Leo/Micro/Zero/...
+  delay(100);
+  Serial.println("\n\nAdafruit Fingerprint sensor enrollment");
+
+  // set the data rate for the sensor serial port
+  finger.begin(57600);
+
+  if (finger.verifyPassword()) {
+    Serial.println("Found fingerprint sensor!");
+  } else {
+    Serial.println("Did not find fingerprint sensor :(");
+    while (1) { delay(1); }
+  }
+
+
+  // Serial.println("Ready to enroll a fingerprint!");
+  // Serial.println("Please type in the ID # (from 1 to 127) you want to save this finger as...");
+
+
+
+  //  id = int(keypad.getKey());
+  // id = readnumber();
+  // Serial.println(id);
+  // if (id == 0) {  // ID #0 not allowed, try again!
+  //   return;
+  // }
+  // Serial.print("Enrolling ID #");
+  // Serial.println(id);
+
+  // while (!getFingerprintEnroll());
+
+
+  finger.getTemplateCount();
+
+  if (finger.templateCount == 0) {
+    Serial.print("Sensor doesn't contain any fingerprint data. Please run the 'enroll' example.");
+  } else {
+    Serial.println("Waiting for valid finger...");
+    Serial.print("Sensor contains ");
+    Serial.print(finger.templateCount);
+    Serial.println(" templates");
+  }
 }
+
+uint8_t readnumber(void) {
+  uint8_t num = 0;
+
+  while (num == 0) {
+    while (!Serial.available())
+      ;
+    num = Serial.parseInt();
+  }
+  return num;
+}
+
+
+//loop
+
+
+void loop() {
+
+  char key = keypad.getKey();  // Read the key
+  if (key == '*') {
+    input = "";
+    code = "";
+    Serial.println("cleared");
+  }
+
+  else if (key == '#') {
+    if (password == input) {
+      finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_ON, 0, FINGERPRINT_LED_PURPLE);
+
+      Serial.println("put finger on sensor");
+      delay(2000);
+      finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_OFF, 0, FINGERPRINT_LED_PURPLE);
+
+      if (getFingerprintID() == 1) {
+        Serial.println("Unlocked");
+        finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_ON, 0, FINGERPRINT_LED_BLUE);
+
+
+        input = "";
+        code = "";
+        if (pos == 0) {
+          for (pos = 0; pos < 90; pos += 3) {  // goes from 0 degrees to 180 degrees
+            // in steps of 1 degree
+            myservo.write(pos);  // tell servo to go to position in variable 'pos'
+            delay(15);           // waits 15ms for the servo to reach the position
+          }
+        } else if (pos == 90) {
+          for (pos = 90; pos > 0; pos -= 3) {  // goes from 0 degrees to 180 degrees
+            // in steps of 1 degree
+            myservo.write(pos);  // tell servo to go to position in variable 'pos'
+            delay(15);           // waits 15ms for the servo to reach the position
+          }
+        }
+
+        delay(2500);
+        finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_OFF, 0, FINGERPRINT_LED_BLUE);
+      } else {
+        Serial.println("Don't recognize finerprint");
+        finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_ON, 1, FINGERPRINT_LED_RED, 50);
+        delay(2500);
+        finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_OFF, 0, FINGERPRINT_LED_RED);
+
+        input = "";
+        code = "";
+      }
+
+    } else {
+      Serial.println("Wrong password");
+      finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_ON, 1, FINGERPRINT_LED_RED, 50);
+      delay(2500);
+      finger.LEDcontrol(FINGERPRINT_LED_GRADUAL_OFF, 0, FINGERPRINT_LED_RED);
+      input = "";
+      code = "";
+    }
+  }
+
+  // Print if key pressed
+  else if (key) {
+    code = code + "*";
+    input += key;
+    Serial.println(code);
+  }
+}
+
+
+
+
+
+
+
+
+uint8_t getFingerprintEnroll() {
+
+  int p = -1;
+  Serial.print("Waiting for valid finger to enroll as #");
+  Serial.println(id);
+  while (p != FINGERPRINT_OK) {
+    p = finger.getImage();
+    switch (p) {
+      case FINGERPRINT_OK:
+        Serial.println("Image taken");
+        break;
+      case FINGERPRINT_NOFINGER:
+        Serial.print(".");
+        break;
+      case FINGERPRINT_PACKETRECIEVEERR:
+        Serial.println("Communication error");
+        break;
+      case FINGERPRINT_IMAGEFAIL:
+        Serial.println("Imaging error");
+        break;
+      default:
+        Serial.println("Unknown error");
+        break;
+    }
+  }
+
+  // OK success!
+
+  p = finger.image2Tz(1);
+  switch (p) {
+    case FINGERPRINT_OK:
+      Serial.println("Image converted");
+      break;
+    case FINGERPRINT_IMAGEMESS:
+      Serial.println("Image too messy");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_FEATUREFAIL:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    case FINGERPRINT_INVALIDIMAGE:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    default:
+      Serial.println("Unknown error");
+      return p;
+  }
+
+  Serial.println("Remove finger");
+  delay(2000);
+  p = 0;
+  while (p != FINGERPRINT_NOFINGER) {
+    p = finger.getImage();
+  }
+  Serial.print("ID ");
+  Serial.println(id);
+  p = -1;
+  Serial.println("Place same finger again");
+  while (p != FINGERPRINT_OK) {
+    p = finger.getImage();
+    switch (p) {
+      case FINGERPRINT_OK:
+        Serial.println("Image taken");
+        break;
+      case FINGERPRINT_NOFINGER:
+        Serial.print(".");
+        break;
+      case FINGERPRINT_PACKETRECIEVEERR:
+        Serial.println("Communication error");
+        break;
+      case FINGERPRINT_IMAGEFAIL:
+        Serial.println("Imaging error");
+        break;
+      default:
+        Serial.println("Unknown error");
+        break;
+    }
+  }
+
+  // OK success!
+
+  p = finger.image2Tz(2);
+  switch (p) {
+    case FINGERPRINT_OK:
+      Serial.println("Image converted");
+      break;
+    case FINGERPRINT_IMAGEMESS:
+      Serial.println("Image too messy");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_FEATUREFAIL:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    case FINGERPRINT_INVALIDIMAGE:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    default:
+      Serial.println("Unknown error");
+      return p;
+  }
+
+  // OK converted!
+  Serial.print("Creating model for #");
+  Serial.println(id);
+
+  p = finger.createModel();
+  if (p == FINGERPRINT_OK) {
+    Serial.println("Prints matched!");
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    Serial.println("Communication error");
+    return p;
+  } else if (p == FINGERPRINT_ENROLLMISMATCH) {
+    Serial.println("Fingerprints did not match");
+    return p;
+  } else {
+    Serial.println("Unknown error");
+    return p;
+  }
+
+  Serial.print("ID ");
+  Serial.println(id);
+  p = finger.storeModel(id);
+
+  if (p == FINGERPRINT_OK) {
+    Serial.println("Stored!");
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    Serial.println("Communication error");
+    return p;
+  } else if (p == FINGERPRINT_BADLOCATION) {
+    Serial.println("Could not store in that location");
+    return p;
+  } else if (p == FINGERPRINT_FLASHERR) {
+    Serial.println("Error writing to flash");
+    return p;
+  } else {
+    Serial.println("Unknown error");
+    return p;
+  }
+
+
+  return true;
+}
+
+uint8_t getFingerprintID() {
+  uint8_t p = finger.getImage();
+  switch (p) {
+    case FINGERPRINT_OK:
+      Serial.println("Image taken");
+      break;
+    case FINGERPRINT_NOFINGER:
+      Serial.println("No finger detected");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_IMAGEFAIL:
+      Serial.println("Imaging error");
+      return p;
+    default:
+      Serial.println("Unknown error");
+      return p;
+  }
+
+  // OK success!
+
+  p = finger.image2Tz();
+  switch (p) {
+    case FINGERPRINT_OK:
+      Serial.println("Image converted");
+      break;
+    case FINGERPRINT_IMAGEMESS:
+      Serial.println("Image too messy");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_FEATUREFAIL:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    case FINGERPRINT_INVALIDIMAGE:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    default:
+      Serial.println("Unknown error");
+      return p;
+  }
+
+  // OK converted!
+  p = finger.fingerSearch();
+  if (p == FINGERPRINT_OK) {
+    Serial.println("Found a print match!");
+    return 1;
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    Serial.println("Communication error");
+    return p;
+  } else if (p == FINGERPRINT_NOTFOUND) {
+    Serial.println("Did not find a match");
+    return p;
+  } else {
+    Serial.println("Unknown error");
+    return p;
+  }
+
+  // found a match!
+  Serial.print("Found ID #");
+  Serial.print(finger.fingerID);
+  Serial.print(" with confidence of ");
+  Serial.println(finger.confidence);
+
+  return finger.fingerID;
+}
+
+
 ```
 
--->
+
 
 # First Milestone
 <!--For your first milestone, describe what your project is and how you plan to build it. You can include:
