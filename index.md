@@ -9,7 +9,7 @@ For my project, I built the Keypad and Fingerprint Lock box. The project has a k
 
 **Replace the BlueStamp logo below with an image of yourself and your completed project. Follow the guide [here](https://tomcam.github.io/least-github-pages/adding-images-github-pages-site.html) if you need help.**
 
-![Headstone Image](logo.svg)
+![Headstone Image](Rushabh-Headshot.png)
   
 <!--# Final Milestone
 For your final milestone, explain the outcome of your project. Key details to include are:
