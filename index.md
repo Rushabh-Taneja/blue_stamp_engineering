@@ -57,6 +57,12 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 # Code
 
 
+<details><summary>Does work</summary>
+
+[hi](https://hello.ca)
+
+</details>
+
 
 ```
 
