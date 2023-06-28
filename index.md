@@ -60,7 +60,8 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 
 <details >
 <summary> Milestone 2 Code</summary>
-  
+ <code>
+   
 ```
 c++
 #include <Keypad.h>
@@ -466,7 +467,7 @@ uint8_t getFingerprintID() {
 
 
 ``` 
-
+</code> 
 </details>
 
 # First Milestone
@@ -486,8 +487,8 @@ For my first milestone, I attached a functioning keypad and a servo and set a pa
 
 <details >
 <summary> Milestone 1  Code</summary> 
-  
-```
+<code> 
+//```
 c++
 #include <Keypad.h>
 #include <Servo.h>
@@ -565,7 +566,9 @@ void loop() {
   }
 }
 
-```
+//```
+
+</code> 
 </details>
 
 # Starter Project 
