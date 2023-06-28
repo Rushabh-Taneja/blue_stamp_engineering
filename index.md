@@ -59,11 +59,6 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 
 <details><summary>Does work</summary>
 
-[hi](https://hello.ca)
-
-</details>
-
-
 ```
 
 
@@ -405,6 +400,8 @@ uint8_t getFingerprintID() {
 
 
 ```
+
+</details>
 
 
 
