@@ -56,6 +56,9 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
  
 # Code
 
+
+<details open> 
+
 ```
 c++
 #include <Keypad.h>
@@ -393,6 +396,10 @@ uint8_t getFingerprintID() {
   return finger.fingerID;
 }
 ```
+
+</details>
+
+
 # First Milestone
 <!--For your first milestone, describe what your project is and how you plan to build it. You can include:
 - An explanation about the different components of your project and how they will all integrate together
