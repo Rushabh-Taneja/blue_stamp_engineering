@@ -2,6 +2,7 @@
 <!--Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
 -->
 For my project, I built the Keypad and Fingerprint Lock box. The project has a keypad and fingerprint sensor attached to a box, and once the correct code and a valid fingerprint are put in, the lock on the inside of the box turns, allowing for user to open it. Once the user puts in or retrieves whatever they need, they can close the box and put in the correct code and fingerprint once again to turn the lock and lock the box.
+
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Rushabh T | American High School | Electrical Engineering | Incoming Senior
@@ -484,6 +485,7 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 # Bill of Materials
 <!--Here's where you'll list the parts of your project. To add more rows, just copy and paste the example rows below.
 Don't forget to place the link of where to buy each component inside the quotation marks in the corresponding row after href =. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize this to your project needs. -->
+
 | **Part** | **Note** | **Price** | **Link** |
 |:--:|:--:|:--:|:--:|
 | Arduino Board | Used to store code as well as input and output pins to send and receive signals. | $27.95 | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
@@ -495,6 +497,8 @@ Don't forget to place the link of where to buy each component inside the quotati
 | LCD display| Shows messages to users | $12.89 | <a href="https://www.amazon.com/SunFounder-Serial-Module-Arduino-Mega2560/dp/B01GPUMP9C/ref=asc_df_B01GPUMP9C/?tag=&linkCode=df0&hvadid=309777534894&hvpos=&hvnetw=g&hvrand=3916194996455184178&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9032183&hvtargid=pla-572925702212&ref=&adgrpid=58425267301&th=1"> Link </a> |
 | 5 Battery Pack | Holds batteries| $3.95 | <a href="https://www.adafruit.com/product/3456?gclid=Cj0KCQjwtO-kBhDIARIsAL6LordZ3h7CNFbAxJyze__4-npcjz4h56lQhREUP4SY0d9Tb1PrckVoAcIaArUyEALw_wcB"> Link </a> |
 | Batteries | Provide an energy source. to the Arduino board | $6.23 | <a href="https://www.amazon.com/AmazonBasics-Performance-Alkaline-Batteries-8-Pack/dp/B00O869QUC/ref=asc_df_B00O869QUC/?tag=hyprod-20&linkCode=df0&hvadid=563645139568&hvpos=&hvnetw=g&hvrand=5406759330328739186&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9032183&hvtargid=pla-332122495633&psc=1"> Link </a> |
+
+
 <!--
 # Other Resources/Examples
 One of the best parts about Github is that you can view how other people set up their own work. Here are some past BSE portfolios that are awesome examples. You can view how they set up their portfolio, and you can view their index.md files to understand how they implemented different portfolio components.
