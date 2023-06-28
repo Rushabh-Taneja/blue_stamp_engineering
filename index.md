@@ -57,7 +57,6 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 # Code
 
 
-<details open> 
 
 ```
 
@@ -401,7 +400,6 @@ uint8_t getFingerprintID() {
 
 ```
 
-</details>
 
 
 # First Milestone
