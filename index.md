@@ -7,7 +7,7 @@ For my project, I built the Keypad and Fingerprint Lock box. The project has a k
 |:--:|:--:|:--:|:--:|
 | Rushabh T | American High School | Electrical Engineering | Incoming Senior
 
-<!---**Replace the BlueStamp logo below with an image of yourself and your completed project. Follow the guide [here](https://tomcam.github.io/least-github-pages/adding-images-github-pages-site.html) if you need help.**
+<!---**Replace the BlueStamp logo below with an image of yourself and your completed project. Follow the guide [here](https://tomcam.github.io/least-github-pages/adding-images-github-p ages-site.html) if you need help.**
 -->
 ![Headstone Image](Rushabh-Headshot.png)
 
