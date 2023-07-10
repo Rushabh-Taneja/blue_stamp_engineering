@@ -36,7 +36,9 @@ Here's where you'll put your code. The syntax below places it into a block of co
 
 <details markdown="1"> 
 
-```c++
+```
+
+c++
 #include <Keypad.h>
 #include <Servo.h>
 #include <Adafruit_Fingerprint.h>
@@ -640,7 +642,7 @@ uint8_t getFingerprintID() {
 
 ```
 
-<details>
+</details>
 
 # Second Milestone
 <!--
