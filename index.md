@@ -78,6 +78,13 @@ SoftwareSerial mySerial(12, 13);
 // #0 is green wire, #1 is white
 #define mySerial Serial1
 #endif
+
+</code>
+
+</details>
+
+```
+
 const byte ROWS = 4;  //four rows
 const byte COLS = 3;  //three columns
 String password = "1234";
@@ -94,11 +101,7 @@ char keys[ROWS][COLS] = {
   { '*', '0', '#' }
 };
 
-</code>
 
-</details>
-
-```
 
 byte rowPins[ROWS] = { 6, 7, 8, 9 };  //connect to the row pinouts of the keypad
 byte colPins[COLS] = { 3, 4, 5 };     //connect to the column pinouts of the keypad
