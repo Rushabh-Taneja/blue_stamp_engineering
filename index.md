@@ -59,7 +59,7 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 <details>
     
 
-```
+<code>
 c++
 #include <Keypad.h>
 #include <Servo.h>
@@ -395,7 +395,9 @@ uint8_t getFingerprintID() {
   Serial.println(finger.confidence);
   return finger.fingerID;
 }
-```
+
+
+</code>
 
 </details>
 
