@@ -59,8 +59,7 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 <details markdown="1"> 
     
 
-<code>
-    
+```    
 
 
 
@@ -79,7 +78,7 @@ SoftwareSerial mySerial(12, 13);
 #define mySerial Serial1
 #endif
 
-</code>
+```
 
 </details>
 
