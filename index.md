@@ -56,7 +56,7 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
  
 # Code
 
-<details>
+<details markdown="1"> 
     
 
 <code>
