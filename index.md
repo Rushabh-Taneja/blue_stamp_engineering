@@ -64,8 +64,6 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
 
 
 
-
-c++
 #include <Keypad.h>
 #include <Servo.h>
 #include <Adafruit_Fingerprint.h>
@@ -95,6 +93,13 @@ char keys[ROWS][COLS] = {
   { '7', '8', '9' },
   { '*', '0', '#' }
 };
+
+</code>
+
+</details>
+
+```
+
 byte rowPins[ROWS] = { 6, 7, 8, 9 };  //connect to the row pinouts of the keypad
 byte colPins[COLS] = { 3, 4, 5 };     //connect to the column pinouts of the keypad
 //Create an object of keypad
@@ -147,11 +152,7 @@ uint8_t readnumber(void) {
 }
  
 
-</code>
 
-</details>
-
-```
 //loop
 void loop() {
   char key = keypad.getKey();  // Read the key
