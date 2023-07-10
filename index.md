@@ -60,6 +60,14 @@ For my second milestone, I have added a fingerprint sensor and battery to my pro
     
 
 <code>
+    
+System.out.println();
+
+</code>
+
+</details>
+
+```
 c++
 #include <Keypad.h>
 #include <Servo.h>
@@ -395,11 +403,8 @@ uint8_t getFingerprintID() {
   Serial.println(finger.confidence);
   return finger.fingerID;
 }
-
-
-</code>
-
-</details>
+              
+```
 
 
 # First Milestone
