@@ -36,8 +36,6 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 
 # Code
-Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize  it to your project needs. 
-
 
 <details markdown="1"> 
 
@@ -50,12 +48,13 @@ c++
 #include <LiquidCrystal.h>
 #include <FastLED.h>
 
-#define LED_PIN     26
-#define NUM_LEDS    60
-#define BRIGHTNESS  64
-#define LED_TYPE    WS2811
+#define LED_PIN 26
+#define NUM_LEDS 60
+#define BRIGHTNESS 64
+#define LED_TYPE WS2811
 #define COLOR_ORDER GRB
 CRGB leds[NUM_LEDS];
+
 
 #define UPDATES_PER_SECOND 100
 
@@ -90,7 +89,6 @@ Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 uint8_t id;
 
 int pos = 0;
-
 char keys[ROWS][COLS] = {
   { '1', '2', '3' },
   { '4', '5', '6' },
@@ -179,6 +177,8 @@ void loop() {
 
         key = '\0';
         long startMillis = millis();
+
+        int l = 1;
         while (true) {
           key = keypad.getKey();
 
@@ -187,35 +187,41 @@ void loop() {
           }
           long currentMillis = millis();
           if (((currentMillis - startMillis) % 9000) < 3000) {
-            lcd.println("Press # to set            ");
-            lcd.setCursor(0, 1);
-            lcd.println("new Code              ");
+            if (l == 1) {
+              lcd.clear();
+              lcd.println("Press # to set            ");
+              lcd.setCursor(0, 1);
+              lcd.println("new Code              ");
+              // while(((currentMillis - startMillis) % 9000) < 3000){
 
-            lcd.clear();
-            // while(((currentMillis - startMillis) % 9000) < 3000){
-
-            // }
+              // }
+              l = 2;
+            }
           } else if (((currentMillis - startMillis) % 9000) < 6000) {
-            lcd.println("Press * to lock           ");
-            lcd.setCursor(0, 1);
-            lcd.println("or unlock box            ");
-            lcd.clear();
-            //             while(((currentMillis - startMillis) % 6000) < 3000){
-              
+            if (l == 2) {
+              lcd.clear();
+              lcd.println("Press * to lock           ");
+              lcd.setCursor(0, 1);
+              lcd.println("or unlock box            ");
+              //
+              l = 3;
+            }
             // }
           } else if (((currentMillis - startMillis) % 9000) < 9000) {
-            lcd.println("Press 0 to add        ");
-            lcd.setCursor(0, 1);
-            lcd.println("fingerprint             ");
-            lcd.clear();
-            //             while(((currentMillis - startMillis) % 9000) < 9000){
-              
-            // }
+            if (l == 3) {
+
+              lcd.clear();
+              lcd.println("Press 0 to add        ");
+              lcd.setCursor(0, 1);
+              lcd.println("fingerprint             ");
+              l = 1;
+            }
           }
         }
 
 
         if (key == '#') {
+          lcd.clear();
           lcd.println("Enter Code          ");
           lcd.setCursor(0, 1);
           lcd.println("#-confirm*-clear");
@@ -263,6 +269,7 @@ void loop() {
                 lcd.println("cleared");
                 lcd.setCursor(0, 1);
                 lcd.println("Enter new code");
+                input="";
               }
             }
           }
