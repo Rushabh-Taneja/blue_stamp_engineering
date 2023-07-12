@@ -1,1 +1,1 @@
-My project is an Arduino lock pad in which I will be using a keypad and a fingerpad sensor to lock a box.
+My project is a lock box which will require a use to enter both the correct code and scan their fingerprint in order to unlock or lock the box. In addition to this, the user will have the option to both add fingerprints to the sensor in order to give more people access as well as change the code for an increase in security.
