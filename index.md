@@ -1117,9 +1117,21 @@ void loop() {
 - What your plan is to complete your project-->
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jMDJ2qqvpEo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 For my starter, I made the Binary Blaster. The binary blaster displays numbers from 1 to 15 in base 10 in a random , and the user needs to put in the corresponding values in binary. The 4 buttons on the binary blaster represent the first, second, third, and fourth bit in binary. A pressed button represents the bit being 1 and non pressed represents the bit being 0. If the user does not get the correct input within 6 seconds, the game ends and the user can restart. After 15 correct inputs, then the user gets the time they took to solve it and can restart. While waiting for the user to start, the game cycles through the numbers and shows the corresponding binary input by lighting up the buttons on the bottom.
-<!--# Schematics 
+<!--
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resources to create professional schematic diagrams, though BSE recommends Tinkercad because it can be done easily and for free in the browser. 
 -->
+
+# Schematics 
+
+Keypad connections
+![Headstone Image](Keypad.jpeg)
+
+Servo Connections
+![Headstone Image](servo.png)
+
+LCD connections
+![Headstone Image](lcd.png)
+
 # Bill of Materials
 <!--Here's where you'll list the parts of your project. To add more rows, just copy and paste the example rows below.
 Don't forget to place the link of where to buy each component inside the quotation marks in the corresponding row after href =. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize this to your project needs. -->
